@@ -8,6 +8,12 @@
 <script>
 import Navbar from '@/components/Navbar'
 export default {
+  beforeCreate(){
+    let data = require('./assets/api/items.json');
+    data.items.forEach(item => {
+      console.log(item);
+    })
+  },
   components:{
     Navbar
   }
@@ -15,24 +21,14 @@ export default {
 </script>
 
 <style lang="scss">
+*{
+  padding:0;
+  margin:0;
+  box-sizing: border-box;
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  height:100%;
+  width:100%;
 }
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
 </style>

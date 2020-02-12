@@ -1,0 +1,14 @@
+@mixin flex-layout{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@mixin centered-gap{
+    margin:0 auto;
+    padding:15px 120px;
+}
+
+@mixin bordered-box{
+    border:2px solid #f6f6f6;
+}
