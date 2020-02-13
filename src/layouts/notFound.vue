@@ -1,0 +1,6 @@
+<template>
+    <div>
+        <h1>Страница не найдена</h1>
+        <a href="/">Каталог</a>
+    </div>
+</template>

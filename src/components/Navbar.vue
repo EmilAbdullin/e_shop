@@ -2,11 +2,13 @@
     <div id="nav" class="navigation">
       <div class="navigation__logo">
         <router-link to="/">
-          <Logo/>
+          <Logo
+          :invert="false"
+          />
         </router-link> 
       </div>
       <div class="navigation__links">
-        <router-link to="/">Каталог</router-link> |
+        <router-link to="/">Каталог</router-link>
         <router-link to="/about">О нас</router-link>
       </div>
       <div class="navigation__cart">
@@ -33,7 +35,7 @@ export default {
   @include flex-layout;
   @include centered-gap;
   @include bordered-box;
-  color:$base-color-text;
+  color:$base-color;
   max-width:$layout-width;
 
   &__logo{
@@ -44,7 +46,8 @@ export default {
       a{
         text-decoration: none;
         font-weight: bold;
-        color: #2c3e50;
+        padding:0 15px;
+        color:$base-color;
         &.router-link-exact-active {
           text-decoration: underline
         }
