@@ -34,7 +34,7 @@ export default {
         max-width:$layout-width;
         width:100%;
         position: absolute;
-        bottom: 0;
+        bottom:0;
 
 
         &__social-links>ul{

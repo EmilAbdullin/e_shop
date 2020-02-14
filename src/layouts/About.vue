@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import articleItem from '@/components/articleItem.vue'
+import articleItem from '@/components/articleItem'
 export default {
   data:()=>({
     articles:[
@@ -48,8 +48,5 @@ export default {
 <style lang="scss">
 @import "../assets/styles/variables";
 @import "../assets/styles/mixins";
-.about{
-  @include centered-gap;
-  max-width:$layout-width;
-}
+
 </style>

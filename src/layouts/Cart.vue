@@ -1,9 +1,23 @@
 <template>
     <div class="cart">
-        <h1>Cart</h1>
+      <div class="cart__orders-wrapper"> 
+        <itemInCart/>
+        <itemInCart/>
+        <itemInCart/>
+      </div>
+        <orderForm/>
     </div>
 </template>
 
+<script>
+import orderForm from '@/components/orderForm'
+import itemInCart from '@/components/itemInCart'
+export default {
+  components:{
+    orderForm,itemInCart
+  }
+}
+</script>
 
 <style lang="scss">
 @import "../assets/styles/variables";
@@ -12,8 +26,12 @@
 .cart{
   @include flex-layout;
   @include centered-gap;
+  padding-bottom:120px;
+  align-items: flex-start;
   max-width:$layout-width;
+  margin-top:50px;
+  &__order-wrappers{
+    width:calc(100% - 640px);
+  }
 }
-
-
 </style>

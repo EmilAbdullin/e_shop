@@ -36,6 +36,7 @@ export default {
 
 .article{
     @include flex-layout;
+    @include centered-gap;
     margin:100px 0;
     &__heading{
       width:25%;
@@ -56,7 +57,7 @@ export default {
       &__item{
         width:45%;
         h3{
-          color:$light-gray-text;
+          color:$light-gray-color;
           font-size:$subheading-font-size;
           font-weight: 300;
         }

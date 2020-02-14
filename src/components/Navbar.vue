@@ -12,7 +12,7 @@
         <router-link to="/about">О нас</router-link>
       </div>
       <div class="navigation__cart">
-        <router-link to="/cart">Корзина</router-link>
+        <router-link to="/cart">&#128722;Корзина <span>5</span></router-link>
       </div>
     </div>
 </template>
