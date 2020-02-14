@@ -33,19 +33,13 @@ export default {
     return{
         colors:this.$store.state.colors,
         costFrom:'',
-        costTo:''
+        costTo:'',
+        filteredColors:this.$store.state.filteredColors
     }
     },
     methods:{
         filterByColor(color){
-            this.$store.state.colors.filter(i =>{
-                if(i.name === color.name){
-                    i.isActive = !i.isActive
-                }
-            })
-            let dataItems = require('../assets/api/items.json');
-            let newArr = dataItems.items.filter(i => i.colors.includes(color.name))
-            console.log(newArr);
+            this.$store.commit('filterByColor',color);
         },
         filterByCost(){
             console.log(this.costFrom);

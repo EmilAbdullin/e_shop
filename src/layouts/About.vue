@@ -48,5 +48,7 @@ export default {
 <style lang="scss">
 @import "../assets/styles/variables";
 @import "../assets/styles/mixins";
-
+.about{
+  padding-bottom:120px;
+}
 </style>

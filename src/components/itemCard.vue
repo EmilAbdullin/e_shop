@@ -1,87 +1,37 @@
 <template>
     <div class="items">
-        <div class="items__item-wrapper">
+        <div class="items__item-wrapper" v-for="(item,key) of allItems">
             <div class="items__item-wrapper__image">
-                <img src="../assets/images/item__001.jpg"/>
+                <img :src="require(`../assets/images/${item.img}`)"/>
+                
             </div>
-            <div class="items__item-wrapper__title">Стул Elbert голубая ткань</div>
-            <div class="items__item-wrapper__caption">С белой тканью тоже есть.</div>
+            <div class="items__item-wrapper__title">{{item.title}}</div>
+            <div class="items__item-wrapper__caption">{{item.description}}</div>
             <div class="items__item-wrapper__info">
                 <div class="items__item-wrapper__info__colors">
                     <label>Цвета</label>
-                    <ul>
-                        <li style="background:red"></li>
-                        <li style="background:blue"></li>
+                    <ul v-if="typeof item.colors === 'object'">
+                        <li  v-for="(color,key) of item.colors" :key="key" :style="{backgroundColor:color}"></li>
+                    </ul>
+                    <ul v-else>
+                        <li :style="{backgroundColor:item.colors}"></li>
                     </ul>
                 </div>
-                <div class="items__item-wrapper__info__cost">8500 &#8381;</div>
+                <div class="items__item-wrapper__info__cost">{{item.cost}} &#8381;</div>
             </div>
             <div class="items__item-wrapper__button">В корзину</div>
         </div>
-
-        <div class="items__item-wrapper">
-            <div class="items__item-wrapper__image">
-                <img src="../assets/images/item__001.jpg"/>
-            </div>
-            <div class="items__item-wrapper__title">Стул Elbert голубая ткань</div>
-            <div class="items__item-wrapper__caption">С белой тканью тоже есть.</div>
-            <div class="items__item-wrapper__info">
-                <div class="items__item-wrapper__info__colors">
-                    <label>Цвета</label>
-                    <ul>
-                        <li style="background:red"></li>
-                        <li style="background:blue"></li>
-                    </ul>
-                </div>
-                <div class="items__item-wrapper__info__cost">8500 &#8381;</div>
-            </div>
-            <div class="items__item-wrapper__button">В корзину</div>
-        </div>
-
-
-        <div class="items__item-wrapper">
-            <div class="items__item-wrapper__image">
-                <img src="../assets/images/item__001.jpg"/>
-            </div>
-            <div class="items__item-wrapper__title">Стул Elbert голубая ткань</div>
-            <div class="items__item-wrapper__caption">С белой тканью тоже есть.</div>
-            <div class="items__item-wrapper__info">
-                <div class="items__item-wrapper__info__colors">
-                    <label>Цвета</label>
-                    <ul>
-                        <li style="background:red"></li>
-                        <li style="background:blue"></li>
-                    </ul>
-                </div>
-                <div class="items__item-wrapper__info__cost">8500 &#8381;</div>
-            </div>
-            <div class="items__item-wrapper__button">В корзину</div>
-        </div>
-
-
-        <div class="items__item-wrapper">
-            <div class="items__item-wrapper__image">
-                <img src="../assets/images/item__001.jpg"/>
-            </div>
-            <div class="items__item-wrapper__title">Стул Elbert голубая ткань</div>
-            <div class="items__item-wrapper__caption">С белой тканью тоже есть.</div>
-            <div class="items__item-wrapper__info">
-                <div class="items__item-wrapper__info__colors">
-                    <label>Цвета</label>
-                    <ul>
-                        <li style="background:red"></li>
-                        <li style="background:blue"></li>
-                    </ul>
-                </div>
-                <div class="items__item-wrapper__info__cost">8500 &#8381;</div>
-            </div>
-            <div class="items__item-wrapper__button">В корзину</div>
-        </div>
-
         
     </div>
 </template>
 
+<script>
+import {mapGetters} from 'vuex'
+export default{
+    computed:mapGetters(['allItems']),
+}
+
+</script>
 
 <style lang="scss">
 @import "../assets/styles/variables";
@@ -91,8 +41,11 @@
     @include centered-gap;
     @include flex-layout;
     flex-wrap:wrap;
+    justify-content:flex-start;
+    align-items:flex-end;
     &__item-wrapper{
-        width:30%;
+        width:370px;
+        margin:10px 20px;
         &__image{
             img{
                 width:360px;

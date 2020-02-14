@@ -37,7 +37,6 @@ export default {
 .article{
     @include flex-layout;
     @include centered-gap;
-    margin:100px 0;
     &__heading{
       width:25%;
       font-size:$heading-font-size;

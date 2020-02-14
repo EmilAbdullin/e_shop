@@ -10,12 +10,6 @@
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 export default {
-  beforeCreate(){
-    let data = require('./assets/api/items.json');
-    data.items.forEach(item => {
-      console.log(item);
-    })
-  },
   components:{
     Navbar,Footer
   }

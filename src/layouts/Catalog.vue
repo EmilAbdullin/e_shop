@@ -5,6 +5,7 @@
     />
     <filterPanel/>
     <itemCard/>
+    
   </div>
 </template>
 
