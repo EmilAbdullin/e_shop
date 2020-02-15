@@ -35,15 +35,24 @@ export default {
 .article{
     @include flex-layout;
     @include centered-gap;
+    @media screen and (max-width:1080px) {
+        flex-wrap: wrap;
+      }
     &__heading{
       width:25%;
       font-size:$heading-font-size;
       margin:15px 0;
+      @media screen and (max-width:1080px) {
+        width:100%;
+      }
     }
     &__content{
       width:70%;
       font-size:$content-font-size;
       line-height:30px;
+      @media screen and (max-width:1080px) {
+        width:100%;
+      }
       p{
         margin-bottom:15px;
       }
@@ -51,8 +60,14 @@ export default {
     &__more-info{
       @include flex-layout;
       margin-top:50px;
+      @media screen and (max-width:640px) {
+           flex-wrap: wrap;
+      }
       &__item{
         width:45%;
+        @media screen and (max-width:640px) {
+           width:100%;
+        }
         h3{
           color:$light-gray-color;
           font-size:$subheading-font-size;

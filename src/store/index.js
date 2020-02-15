@@ -18,7 +18,8 @@ export default new Vuex.Store({
     filteredColors:[],
     costFromPlaceholder:'от',
     costToPlaceholder:'до',
-    hasCardItems:true
+    hasCardItems:true,
+    order:{}
   },
   mutations: {
     filterByColor(state,color){
@@ -53,19 +54,46 @@ export default new Vuex.Store({
     checkFields(event){
 
     },
-    addItemToCart(state,id){
-      let item = state.items.filter(i => i.id === id);
-      state.cart.push(...item);
-      state.totalPrice += +item[0].cost; 
+    addItemToCart(state,payload){
+      console.log('PAYLOAD.DELID',payload.delId);
+      let item = {};
+      state.items.find(i => {
+        if(i.id === payload.id){
+          item.id = i.id;
+          item.img = i.img;
+          item.title = i.title;
+          item.description = i. description;
+          item.colors = i.colors;
+          item.cost = i.cost
+        }
+      });
+      item.delId = payload.delId;
+      state.cart.push(item);
+      state.totalPrice += +item.cost;
+      item = {};
     },
-    deleteItemFromCart(state,id){
+    deleteItemFromCart(state,item){
       state.cart = state.cart.filter(i => {
-        if(i.id === id){
+        if(i.delId === item.delId){
           state.totalPrice -= +i.cost;
         }else{
           return i;
         }
       })
+    },
+    toOrder(state,payload){
+      let order = {
+        name:payload.name,
+        phone:payload.phone,
+        items:[].concat(state.cart),
+        totalPrice:state.totalPrice
+      }
+      state.order = order;
+      state.cart = [];
+      setTimeout(()=>{
+        alert('Ваша заявка принята');
+        console.log(state.order);
+      },5000)
     }
   },
   actions: {

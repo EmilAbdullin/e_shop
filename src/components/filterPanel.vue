@@ -69,10 +69,14 @@ export default {
     .filter-panel{
         @include flex-layout;
         @include centered-gap;
-        
+        @media screen and (max-width:640px) {
+            flex-direction: column;
+            align-items: flex-start;
+        }
         &__colors{
             @include flex-layout;
             width:200px;
+            margin:25px 0;
             ul{
                 width:140px;
                 @include flex-layout;

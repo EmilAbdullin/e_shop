@@ -30,7 +30,10 @@ export default{
     computed:mapGetters(['allItems']),
     methods:{
         addToCart(id){
-            this.$store.commit('addItemToCart',id);
+            let delId = new Date().getTime();
+            this.$store.commit('addItemToCart',{
+                id,delId
+            });
         }
     }
 }
@@ -46,9 +49,21 @@ export default{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     justify-items: center;
-
+    align-items: flex-end;
+    @media screen and (max-width:1170px) {
+            grid-template-columns: repeat(2, 1fr);
+    }
+    @media screen and (max-width:991px) {
+            grid-template-columns: 1fr;
+    }
     &__item-wrapper{
-        width:370px;
+        width:75%;
+        @media screen and (max-width:1280px) {
+            width:90%;
+        }
+        @media screen and (max-width:991px) {
+            width:75%;
+        }
         &__image{
             img{
                 width:360px;

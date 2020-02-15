@@ -30,16 +30,23 @@ export default {
 
 .cart{
   @include flex-layout;
-  @include centered-gap;
   padding-bottom:120px;
   align-items: flex-start;
   max-width:$layout-width;
   margin-top:50px;
+  @media screen and (max-width:991px) {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
   &__order-wrappers{
     width:60%;
   }
   &__order-form{
     width:25%;
+     @media screen and (max-width:991px) {
+      width:90%;
+      margin:15px auto;
+     }
   }
 }
 </style>

@@ -2,7 +2,7 @@
 
 <div>
     <div class="order-item" v-for="item in itemsInCart">
-        <div class="order-item__delete-btn" @click="deleteItemFromCart(item.id)">&#10005;</div>
+        <div class="order-item__delete-btn" @click="deleteItemFromCart(item)">&#10005;</div>
         <div class="order-item__image">
             <img :src="require('../assets/images/'+item.img)">
         </div>
@@ -38,8 +38,8 @@ import {mapGetters} from 'vuex'
 export default {
     computed:mapGetters(['itemsInCart']),
     methods:{
-        deleteItemFromCart(id){
-            this.$store.commit('deleteItemFromCart',id);
+        deleteItemFromCart(item){
+            this.$store.commit('deleteItemFromCart',item);
         }
     }
 }
@@ -49,14 +49,16 @@ export default {
 <style lang="scss">
 @import "../assets/styles/variables";
 @import "../assets/styles/mixins";
-
-    
         .order-item{
             @include flex-layout;
             @include bordered-box;
             position: relative;
             border-right:none;
             border-left:none;
+            @media screen and (max-width:991px) {
+                width:90%;
+                margin:0 auto;
+            }
             &__delete-btn{
                 position: absolute;
                 color:$light-gray-color;
@@ -87,7 +89,7 @@ export default {
                         font-size:$content-font-size;
                     }
                     &__caption{
-                        width:480px;
+                        width:100%;
                         margin:15px 0;
                         font-size:$small-font-size;
                         color:$light-gray-color;

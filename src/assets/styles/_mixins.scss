@@ -6,7 +6,10 @@
 
 @mixin centered-gap{
     margin:0 auto;
-    padding:15px 120px;
+    padding:20px 120px;
+    @media screen and (max-width:1280px) {
+        padding:20px;
+    }
 }
 
 @mixin bordered-box{
