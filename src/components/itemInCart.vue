@@ -1,23 +1,28 @@
 <template>
 
 <div>
-    <div class="order-item">
-        <div class="order-item__delete-btn">&#10005;</div>
+    <div class="order-item" v-for="item in itemsInCart">
+        <div class="order-item__delete-btn" @click="deleteItemFromCart(item.id)">&#10005;</div>
         <div class="order-item__image">
-            <img src="../assets/images/item__001.jpg">
+            <img :src="require('../assets/images/'+item.img)">
         </div>
         <div class="order-item__info-block">
             <div class="order-item__info-block__text">
-                <div class="order-item__info-block__text__title">Обеденный стол Renno 100 см</div>
-                <div class="order-item__info-block__text__caption">Обеденный стол Renno от Storeforhome стильное решение для вашего пространства</div>
+                <div class="order-item__info-block__text__title">{{item.title}}</div>
+                <div class="order-item__info-block__text__caption">{{item.description}}</div>
             </div>
             <div class="order-item__info-block__color-cost">
                 <div class="order-item__info-block__color-cost__color">
                     <label>Цвет</label>
-                    <ul><li></li></ul>
+                    <ul v-if="typeof item.colors === 'object' ">
+                        <li v-for="color in item.colors" :style="{backgroundColor:color}"></li>
+                    </ul>
+                    <ul v-else :style="{backgroundColor:item.colors}">
+                    </ul>
+
                 </div>
                 <div class="order-item__info-block__color-cost__cost">
-                    24500Р
+                    {{item.cost}} &#8381;
                 </div>
             </div>
         </div>
@@ -25,6 +30,21 @@
 </div>
 
 </template>
+
+
+<script>
+import {mapGetters} from 'vuex'
+
+export default {
+    computed:mapGetters(['itemsInCart']),
+    methods:{
+        deleteItemFromCart(id){
+            this.$store.commit('deleteItemFromCart',id);
+        }
+    }
+}
+</script>
+
 
 <style lang="scss">
 @import "../assets/styles/variables";
@@ -77,15 +97,19 @@
                     @include flex-layout;
                     &__color{
                         @include flex-layout;
+                        label{
+                                margin-right:5px;
+                        }
                         ul{
                             list-style: none;
                             @include flex-layout;
+                            }
                             li{
                                 width:25px;
                                 height:25px;
                                 background:red;
                                 border-radius:100%;
-                                margin:0 15px; 
+                                margin-right:5px; 
                                 border: 1px solid gray;
                             }
                         }
@@ -95,7 +119,7 @@
                     }
                 }
             }
-        }
+        
     
 
 

@@ -8,13 +8,17 @@ export default new Vuex.Store({
     items:[...data.items],
     filteredItems:[...data.items],
     cart:[],
+    totalPrice:0,
     colors:[  
       {name:'black',colorVal:'black',isActive:false},
       {name:'white',colorVal:'white',isActive:false},
       {name:'blue', colorVal:'blue',isActive:false},
       {name:'red',  colorVal:'red',isActive:false},
-  ],
-  filteredColors:[]
+    ],
+    filteredColors:[],
+    costFromPlaceholder:'от',
+    costToPlaceholder:'до',
+    hasCardItems:true
   },
   mutations: {
     filterByColor(state,color){
@@ -42,8 +46,27 @@ export default new Vuex.Store({
           }
 
         })
+    },
+    filterByCost(state,payload){
       
     },
+    checkFields(event){
+
+    },
+    addItemToCart(state,id){
+      let item = state.items.filter(i => i.id === id);
+      state.cart.push(...item);
+      state.totalPrice += +item[0].cost; 
+    },
+    deleteItemFromCart(state,id){
+      state.cart = state.cart.filter(i => {
+        if(i.id === id){
+          state.totalPrice -= +i.cost;
+        }else{
+          return i;
+        }
+      })
+    }
   },
   actions: {
   },
@@ -52,6 +75,24 @@ export default new Vuex.Store({
   getters:{
     allItems(state){
       return state.filteredItems;
+    },
+    filterPanelColors(state){
+      return state.colors;
+    },
+    costFromPlaceholder(state){
+      return state.costFromPlaceholder;
+    },
+    costToPlaceholder(state){
+      return state.costToPlaceholder;
+    },
+    hasCardItems(state){
+      return state.hasCardItems;
+    },
+    itemsInCart(state){
+      return state.cart;
+    },
+    totalPrice(state){
+      return state.totalPrice;
     }
   }
 })

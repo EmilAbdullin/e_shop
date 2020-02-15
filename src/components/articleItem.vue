@@ -32,8 +32,6 @@ export default {
 @import "../assets/styles/variables";
 @import "../assets/styles/mixins";
 
-
-
 .article{
     @include flex-layout;
     @include centered-gap;

@@ -8,7 +8,7 @@
                 <label>Цвет</label>
                 <ul>
                     <li 
-                    v-for="color in colors" 
+                    v-for="color in filterPanelColors" 
                     v-bind:style="{backgroundColor:color.colorVal}" 
                     @click="filterByColor(color)" 
                     :class="{active: color.isActive}"></li>
@@ -16,8 +16,8 @@
             </div>
             <div class="filter-panel__cost">
                 <label>Цены</label>
-                    <input @input="filterByCost" v-model="costFrom" placeholder="от" />
-                    <input @input="filterByCost" v-model="costTo" placeholder="до" />
+                    <input @input="filterByCost" @keydown="checkFields" v-model="costFrom" :placeholder="costFromPlaceholder" />
+                    <input @input="filterByCost" @keydown="checkFields" v-model="costTo" :placeholder="costToPlaceholder" />
             </div>
         </div>
     </div>
@@ -27,23 +27,33 @@
 
 
 <script>
+import {mapGetters} from 'vuex'
+
 export default {
-    
     data(){
-    return{
-        colors:this.$store.state.colors,
-        costFrom:'',
-        costTo:'',
-        filteredColors:this.$store.state.filteredColors
-    }
+        return{
+            costFrom:'',
+            costTo:''
+        }
     },
+    computed:mapGetters(['filterPanelColors','costFromPlaceholder','costToPlaceholder']),
     methods:{
         filterByColor(color){
             this.$store.commit('filterByColor',color);
         },
         filterByCost(){
-            console.log(this.costFrom);
-            console.log(this.costTo)
+            console.log(event);
+            console.log('dada');
+            this.costFrom = this.costFrom.replace(/[^0-9]/g,'');
+            this.costTo = this.costTo.replace(/[^0-9]/g,'');
+            this.$store.commit('filterByCost',{
+                costFrom:this.costFrom,
+                costTo:this.costTo
+            });
+            
+        },
+        checkFields(event){
+            this.$store.commit('filterByCost',event);
         }
     }
 }

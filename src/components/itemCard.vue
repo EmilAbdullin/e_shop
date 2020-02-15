@@ -3,7 +3,6 @@
         <div class="items__item-wrapper" v-for="(item,key) of allItems">
             <div class="items__item-wrapper__image">
                 <img :src="require(`../assets/images/${item.img}`)"/>
-                
             </div>
             <div class="items__item-wrapper__title">{{item.title}}</div>
             <div class="items__item-wrapper__caption">{{item.description}}</div>
@@ -19,7 +18,7 @@
                 </div>
                 <div class="items__item-wrapper__info__cost">{{item.cost}} &#8381;</div>
             </div>
-            <div class="items__item-wrapper__button">В корзину</div>
+            <div class="items__item-wrapper__button" @click="addToCart(item.id)">В корзину</div>
         </div>
         
     </div>
@@ -29,6 +28,11 @@
 import {mapGetters} from 'vuex'
 export default{
     computed:mapGetters(['allItems']),
+    methods:{
+        addToCart(id){
+            this.$store.commit('addItemToCart',id);
+        }
+    }
 }
 
 </script>
@@ -39,13 +43,12 @@ export default{
 
 .items{
     @include centered-gap;
-    @include flex-layout;
-    flex-wrap:wrap;
-    justify-content:flex-start;
-    align-items:flex-end;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+
     &__item-wrapper{
         width:370px;
-        margin:10px 20px;
         &__image{
             img{
                 width:360px;

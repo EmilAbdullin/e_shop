@@ -4,7 +4,7 @@
         <div class="order-block__info-block">
             <div class="order-block__info-block__count">
                 <span>Кол-во</span>
-                <span>2</span>
+                <span>{{itemsInCart.length}}</span>
             </div>
             <div class="order-block__info-block__delivery">
                 <span>Доставка</span>
@@ -12,7 +12,7 @@
             </div>
             <div class="order-block__info-block__cost">
                 <span>Итого</span>
-                <span>34 400 Р</span>
+                <span>{{totalPrice}}</span>
             </div>
         </div>
         <form class="order-block__form" @submit.prevent>
@@ -24,6 +24,12 @@
     </div>
 </template>
 
+<script>
+import {mapGetters} from 'vuex'
+export default {
+    computed:mapGetters(['totalPrice','itemsInCart'])
+}
+</script>
 
 
 <style lang="scss">
@@ -31,7 +37,7 @@
 @import "../assets/styles/mixins";
     .order-block{
         padding:15px;
-        width:480px;
+        width:100%;
         @include bordered-box;
         &__heading{
             font-weight:bold;

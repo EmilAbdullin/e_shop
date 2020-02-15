@@ -1,11 +1,14 @@
 <template>
   <div class="catalog">
+
     <articleItem
     :articles="articles"
     />
     <filterPanel/>
-    <itemCard/>
-    
+    <div v-if="hasCardItems">
+      <itemCard/>
+    </div>
+    <div v-else class="catalog__notify">Товар не найден</div>
   </div>
 </template>
 
@@ -13,10 +16,12 @@
 import articleItem from '@/components/articleItem'
 import filterPanel from '@/components/filterPanel'
 import itemCard from '@/components/itemCard'
+import {mapGetters} from 'vuex'
 export default {
   components:{
     articleItem,filterPanel,itemCard
   },
+  computed:mapGetters(['hasCardItems']),
   data(){
     return{
       articles:[
@@ -38,7 +43,15 @@ export default {
 
 
 <style lang="scss">
+@import "../assets/styles/variables";
+
 .catalog{
   padding-bottom:120px;
+  &__notify{
+    text-align:center;
+    font-weight: bold;
+    font-size:$heading-font-size;
+    padding:60px 0;
+  }
 }
 </style>

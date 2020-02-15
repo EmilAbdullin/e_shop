@@ -1,18 +1,23 @@
 <template>
     <div class="cart">
-      <div class="cart__orders-wrapper"> 
-        <itemInCart/>
-        <itemInCart/>
+      <div v-if="itemsInCart.length" class="cart__orders-wrapper"> 
         <itemInCart/>
       </div>
-        <orderForm/>
+        <div v-if="itemsInCart.length" class="cart__order-form">
+          <orderForm/>
+        </div>
+        <p v-else style="text-align:center;width:100%;">
+          Для заказа выберите и <router-link to="/">добавьте товар в корзину</router-link>
+        </p>
     </div>
 </template>
 
 <script>
 import orderForm from '@/components/orderForm'
 import itemInCart from '@/components/itemInCart'
+import {mapGetters} from 'vuex'
 export default {
+  computed:mapGetters(['itemsInCart']),
   components:{
     orderForm,itemInCart
   }
@@ -31,7 +36,10 @@ export default {
   max-width:$layout-width;
   margin-top:50px;
   &__order-wrappers{
-    width:calc(100% - 640px);
+    width:60%;
+  }
+  &__order-form{
+    width:25%;
   }
 }
 </style>

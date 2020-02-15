@@ -12,7 +12,7 @@
         <router-link to="/about">О нас</router-link>
       </div>
       <div class="navigation__cart">
-        <router-link to="/cart">&#128722;Корзина <span>5</span></router-link>
+        <router-link to="/cart">&#128722;Корзина <span>{{itemsInCart.length}}</span></router-link>
       </div>
     </div>
 </template>
@@ -20,7 +20,9 @@
 
 <script>
 import Logo from '@/components/Logo'
+import {mapGetters} from 'vuex'
 export default {
+  computed:mapGetters(['itemsInCart']),
   components:{
     Logo
   }
