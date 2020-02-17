@@ -16,14 +16,12 @@ export default new Vuex.Store({
       {name:'red',  colorVal:'red',isActive:false},
     ],
     filteredColors:[],
-    costFromPlaceholder:'от',
-    costToPlaceholder:'до',
     hasCardItems:true,
-    order:{}
+    order:{},
+    isActiveFilter:false,
   },
   mutations: {
-    filterByColor(state,color){
-      state.filteredItems = [];
+    checkColorInFilter(state,color){
       state.colors.map(item => {
         if (item.name === color.name) {
           item.isActive = !item.isActive
@@ -35,27 +33,113 @@ export default new Vuex.Store({
         }else{
           state.filteredColors.push(color.name);
         }
-        state.items.filter(item => {
-          if(state.filteredColors.length > 0){
-            state.filteredColors.forEach(color =>{
-              if(item.colors.includes(color) && !state.filteredItems.includes(item)){
-                state.filteredItems.push(item);
-              }
-            })
-          }else{
-            state.filteredItems = state.items;
+    },
+    filterItems(state,payload){
+      state.isActiveFilter = true;
+      if( (payload.costTo !== '' && payload.costFrom !== '') && (+payload.costTo < +payload.costFrom) ){
+        alert('Выбран неверный интервал');
+      }else if(payload.costTo === '' && payload.costFrom === ''){
+        if(state.filteredColors.length > 0){
+          this.commit('filterByColor');
+        }else{
+          state.filteredItems = state.items;
+        }
+      }else if( (payload.costTo === '' && payload.costFrom !== '') || (payload.costTo !=='' && payload.costFrom === '') || (payload.costTo !=='' && payload.costFrom !== '')){
+        if(state.filteredColors.length > 0){
+          this.commit('filterByColorAndCost',{
+            costFrom:payload.costFrom,
+            costTo:payload.costTo
+          })
+        }else{
+          this.commit('filterByCost',{
+            costFrom:payload.costFrom,
+            costTo:payload.costTo
+          })
+        }
+      }
+    },
+    filterByColor(state){
+      state.filteredItems = [];
+      state.items.filter(item => {
+        state.filteredColors.forEach(color =>{
+          if(item.colors.includes(color) && !state.filteredItems.includes(item)){
+            state.filteredItems.push(item);
           }
-
         })
+      })
     },
-    filterByCost(state,payload){
-      
+    filterByColorAndCost(state,costInterval){
+      state.filteredItems = [];
+      if(costInterval.costTo !== '' && costInterval.costFrom === ''){
+        state.items.filter(item => {
+          state.filteredColors.forEach(color => {
+            if( (item.colors.includes(color)) && (!state.filteredItems.includes(item)) && (+item.cost <= +costInterval.costTo)){
+              state.filteredItems.push(item);
+            }else{
+              state.hasCardItems = !!state.filteredItems.length;
+            }
+          })
+        })
+      }else if(costInterval.costFrom !== '' && costInterval.costTo === ''){
+        state.items.filter(item => {
+          state.filteredColors.forEach(color =>{
+            if( item.colors.includes(color) && !state.filteredItems.includes(item) && (+item.cost >= +costInterval.costFrom)){
+              state.filteredItems.push(item);
+            }else{
+              state.hasCardItems = !!state.filteredItems.length;
+            }
+          })
+        })
+      }else if(costInterval.costFrom !== '' && costInterval.costTo !== ''){
+        state.items.filter(item => {
+          state.filteredColors.forEach(color =>{
+            if( item.colors.includes(color) && !state.filteredItems.includes(item) && (+item.cost >= +costInterval.costFrom) && (+item.cost <= +costInterval.costTo)){
+              state.filteredItems.push(item);
+            }else{
+              state.hasCardItems = !!state.filteredItems.length;
+            }
+          })
+        })
+      }
     },
-    checkFields(event){
-
+    filterByCost(state,costInterval){
+      state.filteredItems = [];
+      if(costInterval.costTo !== '' && costInterval.costFrom === ''){
+        state.items.filter(item => {
+          state.filteredColors.forEach(color => {
+            if(+item.cost <= +costInterval.costTo){
+              state.filteredItems.push(item);
+            }else{
+              state.hasCardItems = !!state.filteredItems.length;
+            }
+          })
+        })
+      }else if(costInterval.costFrom !== '' && costInterval.costTo === ''){
+        state.items.filter(item => {
+            if(+item.cost >= +costInterval.costFrom){
+              state.filteredItems.push(item);
+            }else{
+              state.hasCardItems = !!state.filteredItems.length;
+            }
+        })
+      }else if(costInterval.costFrom !== '' && costInterval.costTo !== ''){
+        state.items.filter(item => {
+            if((+item.cost >= +costInterval.costFrom) && (+item.cost <= +costInterval.costTo)){
+              state.filteredItems.push(item);
+            }else{
+              state.hasCardItems = !!state.filteredItems.length;
+            }
+        })
+      }
+    },
+    clearFilter(state){
+      state.isActiveFilter = false;
+      state.filteredItems = state.items;
+      state.filteredColors = [];
+      state.colors.map(item => item.isActive = false)
+      state.hasCardItems = true;
     },
     addItemToCart(state,payload){
-      console.log('PAYLOAD.DELID',payload.delId);
       let item = {};
       state.items.find(i => {
         if(i.id === payload.id){
@@ -70,7 +154,6 @@ export default new Vuex.Store({
       item.delId = payload.delId;
       state.cart.push(item);
       state.totalPrice += +item.cost;
-      item = {};
     },
     deleteItemFromCart(state,item){
       state.cart = state.cart.filter(i => {
@@ -107,12 +190,6 @@ export default new Vuex.Store({
     filterPanelColors(state){
       return state.colors;
     },
-    costFromPlaceholder(state){
-      return state.costFromPlaceholder;
-    },
-    costToPlaceholder(state){
-      return state.costToPlaceholder;
-    },
     hasCardItems(state){
       return state.hasCardItems;
     },
@@ -121,6 +198,9 @@ export default new Vuex.Store({
     },
     totalPrice(state){
       return state.totalPrice;
+    },
+    isActiveFilter(state){
+      return state.isActiveFilter;
     }
   }
 })

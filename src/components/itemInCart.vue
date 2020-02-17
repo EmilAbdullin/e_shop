@@ -50,8 +50,9 @@ export default {
 @import "../assets/styles/variables";
 @import "../assets/styles/mixins";
         .order-item{
-            @include flex-layout;
             @include bordered-box;
+            display:flex;
+            align-items:center;
             position: relative;
             border-right:none;
             border-left:none;

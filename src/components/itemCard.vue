@@ -43,23 +43,24 @@ export default{
 <style lang="scss">
 @import "../assets/styles/variables";
 @import "../assets/styles/mixins";
-
 .items{
-    @include centered-gap;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-items: center;
-    align-items: flex-end;
+     display: flex;
+    flex-wrap: wrap;
+    padding:75px 0 0 75px;
     @media screen and (max-width:1170px) {
-            grid-template-columns: repeat(2, 1fr);
+
     }
     @media screen and (max-width:991px) {
-            grid-template-columns: 1fr;
+        justify-content:center;
     }
     &__item-wrapper{
-        width:75%;
+        justify-self:center;
+        align-self:flex-end;
+        width:calc(100% / 3);
+        border: 0 solid transparent;
+        border-width: 0 75px 75px 0;
         @media screen and (max-width:1280px) {
-            width:90%;
+            width:calc(100% / 2);
         }
         @media screen and (max-width:991px) {
             width:75%;

@@ -30,6 +30,7 @@ export default {
 
 .cart{
   @include flex-layout;
+  @include centered-gap;
   padding-bottom:120px;
   align-items: flex-start;
   max-width:$layout-width;

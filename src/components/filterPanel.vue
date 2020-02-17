@@ -10,14 +10,20 @@
                     <li 
                     v-for="color in filterPanelColors" 
                     v-bind:style="{backgroundColor:color.colorVal}" 
-                    @click="filterByColor(color)" 
+                    @click="checkColorInFilter(color)" 
                     :class="{active: color.isActive}"></li>
                 </ul>
             </div>
             <div class="filter-panel__cost">
                 <label>Цены</label>
-                    <input @input="filterByCost" @keydown="checkFields" v-model="costFrom" :placeholder="costFromPlaceholder" />
-                    <input @input="filterByCost" @keydown="checkFields" v-model="costTo" :placeholder="costToPlaceholder" />
+                    <input v-model="costFrom" @input="digitValidate" placeholder="от" />
+                    <input v-model="costTo"   @input="digitValidate" placeholder="до" />
+            </div>
+            <div v-if="!isActiveFilter" class="filter-panel__submit-btn" @click="filterItems">
+                Применить
+            </div>
+            <div v-else class="filter-panel__cancel-btn" @click="clearFilter">
+                Сбросить
             </div>
         </div>
     </div>
@@ -36,25 +42,28 @@ export default {
             costTo:''
         }
     },
-    computed:mapGetters(['filterPanelColors','costFromPlaceholder','costToPlaceholder']),
+    computed:mapGetters(['filterPanelColors','isActiveFilter']),
     methods:{
-        filterByColor(color){
-            this.$store.commit('filterByColor',color);
+        checkColorInFilter(color){
+            this.$store.commit('checkColorInFilter',color);
         },
-        filterByCost(){
-            console.log(event);
-            console.log('dada');
-            this.costFrom = this.costFrom.replace(/[^0-9]/g,'');
-            this.costTo = this.costTo.replace(/[^0-9]/g,'');
-            this.$store.commit('filterByCost',{
+        filterItems(){
+            this.$store.commit('filterItems',{
                 costFrom:this.costFrom,
                 costTo:this.costTo
+                
             });
-            
+            this.costTo = '';
+            this.costFrom = '';
         },
-        checkFields(event){
-            this.$store.commit('filterByCost',event);
+        digitValidate(){
+            this.costFrom = this.costFrom.replace(/[^0-9]/g,'');
+            this.costTo = this.costTo.replace(/[^0-9]/g,'');
+        },
+        clearFilter(){
+            this.$store.commit('clearFilter');
         }
+        
     }
 }
 </script>
@@ -69,7 +78,7 @@ export default {
     .filter-panel{
         @include flex-layout;
         @include centered-gap;
-        @media screen and (max-width:640px) {
+        @media screen and (max-width:768px) {
             flex-direction: column;
             align-items: flex-start;
         }
@@ -95,12 +104,42 @@ export default {
         }
         &__cost{
             @include flex-layout;
-            width:250px;
+            width:280px;
             input{
                 width:100px;
                 padding:10px;
                 border:none;
                 outline:none;
+            }
+        }
+        &__submit-btn{
+            padding:10px 25px;
+            border: none;
+            background: #1DD87E;
+            color:white;
+            border-radius: 2.5px;
+            box-shadow: 0 0 5px -1px grey;
+            outline:none;
+            text-transform:uppercase;
+            cursor:pointer;
+            font-size:$small-font-size;
+            @media screen and (max-width:768px) {
+                margin-top:20px;
+            }
+        }
+        &__cancel-btn{
+            background:tomato;
+            padding:10px 25px;
+            border: none;
+            color:white;
+            border-radius: 2.5px;
+            box-shadow: 0 0 5px -1px grey;
+            outline:none;
+            text-transform:uppercase;
+            cursor:pointer;
+            font-size:$small-font-size;
+            @media screen and (max-width:768px) {
+                margin-top:20px;
             }
         }
     }
