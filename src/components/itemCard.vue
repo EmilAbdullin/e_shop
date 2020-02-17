@@ -47,11 +47,11 @@ export default{
      display: flex;
     flex-wrap: wrap;
     padding:75px 0 0 75px;
-    @media screen and (max-width:1170px) {
-
-    }
     @media screen and (max-width:991px) {
         justify-content:center;
+    }
+    @media screen and (max-width:640px) {
+        padding:inherit;
     }
     &__item-wrapper{
         justify-self:center;
@@ -65,6 +65,9 @@ export default{
         @media screen and (max-width:991px) {
             width:75%;
         }
+        @media screen and (max-width:640px) {
+            border-width:0;
+        }
         &__image{
             img{
                 width:360px;
@@ -72,6 +75,7 @@ export default{
                 display: block;
                 margin:0 auto;
             }
+            
         }
         &__title{
             color:$base-color;

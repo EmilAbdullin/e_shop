@@ -38,9 +38,13 @@ export default {
   @media screen and (max-width:991px) {
     flex-direction: column-reverse;
     align-items: center;
+    padding-bottom:120px;
   }
-  &__order-wrappers{
+  &__orders-wrapper{
     width:60%;
+    @media screen and (max-width:991px) {
+      width:100%;
+    }
   }
   &__order-form{
     width:25%;

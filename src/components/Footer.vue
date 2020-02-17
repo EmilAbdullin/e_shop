@@ -31,7 +31,6 @@ export default {
         background:$base-color;
         @include centered-gap;
         @include flex-layout;
-        max-width:$layout-width;
         width:100%;
         position: absolute;
         bottom:0;

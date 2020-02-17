@@ -38,7 +38,6 @@ export default {
   @include centered-gap;
   @include bordered-box;
   color:$base-color;
-  max-width:$layout-width;
 
   &__logo{
     cursor: pointer;
